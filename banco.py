@@ -9,12 +9,19 @@ class Banco:
         self._caixa_geral = 0
         self._total_tributos = 0
         self._manipulador = ManipuladorDeTributaveis()
+        self._seguros = []
 
     def inserir_conta(self, conta):
         self._contas.append(conta)
 
     def remover_conta(self, conta):
         self._contas.pop(conta)
+
+    def inserir_seguro(self, seguro):
+        self._contas.append(seguro)
+
+    def remover_seguro(self, seguro):
+        self._contas.pop(seguro)
 
     def listar_contas(self):
         caixa_temporario = 0
@@ -41,6 +48,9 @@ class Banco:
         print(f'Total das atualizações: {total_atualizacoes}')
         print(f'Total dos saldos: {total_saldo}')
 
-    # def tributos(self):
-    #     self._total_tributos += self._manipulador.total_impostos()
-    #     return print(self._total_tributos)
+    def tributar(self):
+        self._total_tributos += self._manipulador.calcular_impostos(self._contas + self._seguros)
+        return self._total_tributos
+
+    def total_tributos(self):
+        return print(f"Valor de todos impostos no banco {self._nome}: R$ {self._total_tributos:.2f}")
